@@ -37,18 +37,20 @@ void loop()
     Serial.println("hello");
   }
   */
-     
   map1();
   character();
 }
 
-int j=0;
-void map1()
+void map1()//there needs to be a delay before laser shoots out
+//, but if I add delat before map1(); then it screws up
+//need delay to only apply to the lasers and not player
 {
   for (int k=0; k < 8; k++)
   {
-    DrawPx(random(6),k,Green);
-    DrawPx(k,random(6),Green);
+    DrawPx(player.x,0,Green);//I need it to draw this<--
+    DrawPx(0,player.y,Green);//and this first then delay it<---
+    DrawPx(player.x,k,Green);//then draw these lasers <--
+    DrawPx(k,player.y,Green);//<--
   }
 }
 
