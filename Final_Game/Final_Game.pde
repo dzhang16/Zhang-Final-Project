@@ -1,4 +1,7 @@
 //Dylan Zhang
+//try make it so that you start out with one or two boulders then when the counter 
+//reaches a certain number add the next boulder and decrease speed
+//also add lives 
 #include <MeggyJrSimple.h>    // Required code, line 1 of 2.
 struct Point
 {
@@ -17,9 +20,10 @@ void setup()                    // run once, when the sketch starts
   Serial.begin(9600);
 }
 int letter=0;
-int speed=60;
+int speed=230;
 int movement=0;
 int x=player.x;
+int counter=0;
 void loop()
 {
   if (letter == 1)//death screen
@@ -44,6 +48,15 @@ void loop()
 
 void DrawB()
 {
+  if (counter==3)
+  {
+    speed=200;//speeds it up 
+  }
+  else
+  if (laser2.x==7)
+  {
+    counter++;
+  }
   walls();
   if (player.x==laser.x)
   {
@@ -100,6 +113,8 @@ void DrawA()//death screen
     letter=0;
     player.x=3;
     player.y=4;
+    speed=230;
+    counter=0;
   }
 }
 
@@ -221,7 +236,7 @@ void character()
   }
   DrawPx(player.x,player.y,Red); 
   DisplaySlate();
-  delay(200);
+  delay(speed);
   ClearSlate();
 }
 
