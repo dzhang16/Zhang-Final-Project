@@ -24,6 +24,26 @@ void loop()
 {
   if (letter == 1)//death screen
     DrawA();
+  if (letter == 0)
+    DrawB();
+  //need some way to track player movement?When player moves lasers are drawn
+  //or you could have two variable one for x coordinate and one for y coordinate
+  //then use those variable to always have twon lasers that follow player
+/*    if (int (x++))
+  {
+    movement++;
+    Serial.println("hello");
+  }
+  if (player.y++)
+  {
+    movement++;
+    Serial.println("hello");
+  }
+  */
+}
+
+void DrawB()
+{
   walls();
   if (player.x==laser.x)
   {
@@ -57,24 +77,9 @@ void loop()
       letter=1;
     }
   }
-  //need some way to track player movement?When player moves lasers are drawn
-  //or you could have two variable one for x coordinate and one for y coordinate
-  //then use those variable to always have twon lasers that follow player
-/*    if (int (x++))
-  {
-    movement++;
-    Serial.println("hello");
-  }
-  if (player.y++)
-  {
-    movement++;
-    Serial.println("hello");
-  }
-  */
   map1();
   character();
 }
-
 void DrawA()//death screen
 {
   for (int j=0; j < 8; j++) 
@@ -88,6 +93,13 @@ void DrawA()//death screen
     DrawPx(j,6,Red);
     DrawPx(j,7,Red);
     DisplaySlate();
+  }
+  CheckButtonsPress();
+  if (Button_B)
+  {
+    letter=0;
+    player.x=3;
+    player.y=4;
   }
 }
 
@@ -209,7 +221,7 @@ void character()
   }
   DrawPx(player.x,player.y,Red); 
   DisplaySlate();
-  delay(150);
+  delay(200);
   ClearSlate();
 }
 
