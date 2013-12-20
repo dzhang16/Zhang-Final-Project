@@ -7,6 +7,7 @@ struct Point
 };
 
 Point player={3,4};
+Point laser={1,0};
 void setup()                    // run once, when the sketch starts
 {
   MeggyJrSimpleSetup();  // Required code, line 2 of 2.
@@ -19,9 +20,12 @@ int x=player.x;
 void loop()
 {
   walls();
-  if (ReadPx(player.x,player.y)==Green)
+  if (player.x==laser.x)
   {
-    ClearSlate();
+    if (player.y==laser.y)
+    {
+      ClearSlate();
+    }
   }
   //need some way to track player movement?When player moves lasers are drawn
   //or you could have two variable one for x coordinate and one for y coordinate
@@ -45,12 +49,17 @@ void map1()//there needs to be a delay before laser shoots out
 //, but if I add delat before map1(); then it screws up
 //need delay to only apply to the lasers and not player
 {
-  for (int k=0; k < 8; k++)
+  DrawPx(laser.x,laser.y,Green);
   {
-    DrawPx(player.x,0,Green);//I need it to draw this<--
-    DrawPx(0,player.y,Green);//and this first then delay it<---
-    DrawPx(player.x,k,Green);//then draw these lasers <--
-    DrawPx(k,player.y,Green);//<--
+    if (laser.y==7)
+    {
+      laser.y=0;
+    }
+    else
+    if (laser.y<7)
+    {
+      laser.y++;
+    }
   }
 }
 
