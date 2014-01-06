@@ -24,13 +24,15 @@ int speed=230;
 int movement=0;
 int x=player.x;
 int counter=0;
+int DeathCounter=0;
 void loop()
 {
   if (letter == 1)//death screen
     DrawA();
+    SetAuxLEDsBinary(B00000000);
   if (letter == 0)
     DrawB();
-  //need some way to track player movement?When player moves lasers are drawn
+   //need some way to track player movement?When player moves lasers are drawn
   //or you could have two variable one for x coordinate and one for y coordinate
   //then use those variable to always have twon lasers that follow player
 /*    if (int (x++))
@@ -62,33 +64,69 @@ void DrawB()
   {
     if (player.y==laser.y)
     {
-      ClearSlate();
-      letter=1;
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
     }
   }
   if (player.x==laser2.x)
   {
     if (player.y==laser2.y)
     {
-      ClearSlate();
-      letter=1;
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
     }
   }
   if (player.x==laser3.x)
   {
     if (player.y==laser3.y)
     {
-      ClearSlate();
-      letter=1;
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
     }
   }
   if (player.x==laser4.x)
   {
     if (player.y==laser4.y)
     {
-      ClearSlate();
-      letter=1;
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
     }
+  }
+  if (DeathCounter==0)
+  {
+    SetAuxLEDsBinary(B11111111);
+  }
+  if (DeathCounter==1)
+  {
+    SetAuxLEDsBinary(B11111110);
+  }
+  if (DeathCounter==2)
+  {
+    SetAuxLEDsBinary(B11111100);
+  }
+  if (DeathCounter==3)
+  {
+    SetAuxLEDsBinary(B11111000);
+  }
+  if (DeathCounter==4)
+  {
+    SetAuxLEDsBinary(B11110000);
+  }
+  if (DeathCounter==5)
+  {
+    SetAuxLEDsBinary(B11100000);
+  }
+  if (DeathCounter==6)
+  {
+    SetAuxLEDsBinary(B11000000);
+  }
+  if (DeathCounter==7)
+  {
+    SetAuxLEDsBinary(B10000000);
+  }
+  if (DeathCounter>7)
+  {
+    letter=1;
   }
   map1();
   character();
@@ -111,6 +149,7 @@ void DrawA()//death screen
   if (Button_B)
   {
     letter=0;
+    DeathCounter=0;
     player.x=3;
     player.y=4;
     speed=230;
