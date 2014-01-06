@@ -32,6 +32,8 @@ void loop()
     SetAuxLEDsBinary(B00000000);
   if (letter == 0)
     DrawB();
+  if (letter==2)
+    DrawC();
    //need some way to track player movement?When player moves lasers are drawn
   //or you could have two variable one for x coordinate and one for y coordinate
   //then use those variable to always have twon lasers that follow player
@@ -50,9 +52,10 @@ void loop()
 
 void DrawB()
 {
-  if (counter==3)
+  if (counter==8)
   {
-    speed=200;//speeds it up 
+    letter=2;//speeds it up 
+    Serial.println("Bitch");
   }
   else
   if (laser2.x==7)
@@ -131,6 +134,103 @@ void DrawB()
   map1();
   character();
 }
+
+
+
+
+
+
+void DrawC()
+{
+  if (counter==5)
+  {
+    speed=180;//speeds it up 
+    Serial.println("Bitch");
+  }
+  else
+  if (laser2.x==7)
+  {
+    counter++;
+  }
+  walls();
+  if (player.x==laser.x)
+  {
+    if (player.y==laser.y)
+    {
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  if (player.x==laser2.x)
+  {
+    if (player.y==laser2.y)
+    {
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  if (player.x==laser3.x)
+  {
+    if (player.y==laser3.y)
+    {
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  if (player.x==laser4.x)
+  {
+    if (player.y==laser4.y)
+    {
+      DeathCounter++;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  if (DeathCounter==0)
+  {
+    SetAuxLEDsBinary(B11111111);
+  }
+  if (DeathCounter==1)
+  {
+    SetAuxLEDsBinary(B11111110);
+  }
+  if (DeathCounter==2)
+  {
+    SetAuxLEDsBinary(B11111100);
+  }
+  if (DeathCounter==3)
+  {
+    SetAuxLEDsBinary(B11111000);
+  }
+  if (DeathCounter==4)
+  {
+    SetAuxLEDsBinary(B11110000);
+  }
+  if (DeathCounter==5)
+  {
+    SetAuxLEDsBinary(B11100000);
+  }
+  if (DeathCounter==6)
+  {
+    SetAuxLEDsBinary(B11000000);
+  }
+  if (DeathCounter==7)
+  {
+    SetAuxLEDsBinary(B10000000);
+  }
+  if (DeathCounter>7)
+  {
+    letter=1;
+  }
+  map2();
+  character();
+}
+
+
+
+
+
+
+
 void DrawA()//death screen
 {
   for (int j=0; j < 8; j++) 
@@ -157,7 +257,41 @@ void DrawA()//death screen
   }
 }
 
-void map1()//there needs to be a delay before laser shoots out
+void map1()
+{
+  DrawPx(laser2.x,laser2.y,Green);
+  {
+    if (laser2.x==7)
+    {
+      laser2.y=player.y;
+      laser2.x=0;
+    }
+    else
+    if (laser2.x<7)
+    {
+      laser2.x++;
+    }
+  }
+  DrawPx(laser.x,laser.y,Green);
+  {
+    if (laser.y == 7)
+    {
+      laser.x = player.x;
+      laser.y = 0;
+    }
+    else
+    if (laser.y<7)
+    {
+      laser.y++;
+    }
+  }
+}
+
+
+
+
+
+void map2()//there needs to be a delay before laser shoots out
 //, but if I add delay before map1(); then it screws up
 //need delay to only apply to the lasers and not player
 {
@@ -216,6 +350,9 @@ void map1()//there needs to be a delay before laser shoots out
 }
 
 
+
+
+
 void walls()                     // run over and over again
 {
   for (int j=0; j < 8; j++)
@@ -228,6 +365,9 @@ void walls()                     // run over and over again
     DisplaySlate();
   }
 }
+
+
+
 
 
 void character()
