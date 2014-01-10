@@ -10,31 +10,31 @@ struct Point
 };
 
 Point player={3,4};
-Point laser={1,0};
-Point laser2={0,3};
-Point laser3={3,0};
-Point laser4={0,5};
+Point laser={1,0};//one of the obstacles
+Point laser2={0,3};//second obstacle
+Point laser3={3,0};//third obstacle
+Point laser4={0,5};//4th obstacle
 void setup()                    // run once, when the sketch starts
 {
   MeggyJrSimpleSetup();  // Required code, line 2 of 2.
   Serial.begin(9600);
 }
-int letter=0;
-int speed=230;
+int letter=0;//to help change between methods
+int speed=230;//made speed so that I could decrease it after a certain number of turns
 int movement=0;
 int x=player.x;
-int counter=0;
-int DeathCounter=0;
+int counter=0;//to keep track of turns
+int DeathCounter=0;// to keep track of deaths for the lives
 void loop()
 {
   if (letter == 1)//death screen
     DrawA();
     SetAuxLEDsBinary(B00000000);
-  if (letter == 0)
+  if (letter == 0)//this is the first screen you see when you turn on with 2 obstacles
     DrawB();
-  if (letter==2)
+  if (letter==2)//last level with four obstacles
     DrawC();
-  if (letter==3)
+  if (letter==3)//3 obstacle level
     DrawD();
    //need some way to track player movement?When player moves lasers are drawn
   //or you could have two variable one for x coordinate and one for y coordinate
@@ -56,15 +56,15 @@ void DrawB()
 {
   if (counter==6)
   {
-    letter=3;//speeds it up 
+    letter=3;//changes it to different method
   }
-  else
+  else// if not do this
   if (laser2.x==7)
   {
     counter++;
   }
   walls();
-  if (player.x==laser.x)
+  if (player.x==laser.x)//all this is to just make the meggy check to see if the laser is touching the player
   {
     if (player.y==laser.y)
     {
@@ -96,7 +96,7 @@ void DrawB()
       Tone_Start(ToneC3, 150);
     }
   }
-  if (DeathCounter==0)
+  if (DeathCounter==0)//these are to show the lives with the LEDS.  turns one LED off everytime you get hit
   {
     SetAuxLEDsBinary(B11111111);
   }
@@ -142,7 +142,7 @@ void DrawD()
 {
   if (counter==12)
   {
-    letter=2;//speeds it up 
+    letter=2;//changes method
     Serial.println("B");
   }
   else
@@ -151,7 +151,7 @@ void DrawD()
     counter++;
   }
   walls();
-  if (player.x==laser.x)
+  if (player.x==laser.x)//checks if laser toouching player
   {
     if (player.y==laser.y)
     {
@@ -175,7 +175,7 @@ void DrawD()
       Tone_Start(ToneC3, 150);
     }
   }
-  if (DeathCounter==0)
+  if (DeathCounter==0)//LED's for the lives.  turns one LED off everytime you get hit
   {
     SetAuxLEDsBinary(B11111111);
   }
@@ -222,7 +222,7 @@ void DrawC()
 {
   if (counter==18)
   {
-    speed=180;//speeds it up 
+    speed=180;//speeds it up after 18 turns
     Serial.println("B");
   }
   else
@@ -231,7 +231,7 @@ void DrawC()
     counter++;
   }
   walls();
-  if (player.x==laser.x)
+  if (player.x==laser.x)//checks if lasers touching player
   {
     if (player.y==laser.y)
     {
@@ -263,7 +263,7 @@ void DrawC()
       Tone_Start(ToneC3, 150);
     }
   }
-  if (DeathCounter==0)
+  if (DeathCounter==0)//turns one LED off everytime you get hit
   {
     SetAuxLEDsBinary(B11111111);
   }
@@ -335,17 +335,17 @@ void DrawA()//death screen
   }
 }
 
-void map1()
+void map1()// first level with two obstacles
 {
-  DrawPx(laser2.x,laser2.y,Green);
+  DrawPx(laser2.x,laser2.y,Green);//draws laser
   {
-    if (laser2.x==7)
+    if (laser2.x==7)//loops obstacle back if it reaches end
     {
       laser2.y=player.y;
       laser2.x=0;
     }
     else
-    if (laser2.x<7)
+    if (laser2.x<7)//laser goes up one space if not at end
     {
       laser2.x++;
     }
@@ -367,17 +367,17 @@ void map1()
 
 
 
-void map3()
+void map3()//second level with 3 obstacle
 {
-  DrawPx(laser2.x,laser2.y,Green);
+  DrawPx(laser2.x,laser2.y,Green);//draws laser
   {
-    if (laser2.x==7)
+    if (laser2.x==7)//loops obstacle back if it reaches end
     {
       laser2.y=player.y;
       laser2.x=0;
     }
     else
-    if (laser2.x<7)
+    if (laser2.x<7)//laser goes up one space if not at end
     {
       laser2.x++;
     }
@@ -412,19 +412,17 @@ void map3()
 
 
 
-void map2()//there needs to be a delay before laser shoots out
-//, but if I add delay before map1(); then it screws up
-//need delay to only apply to the lasers and not player
+void map2()//last level with 4 obstacles
 {
-  DrawPx(laser2.x,laser2.y,Green);
+  DrawPx(laser2.x,laser2.y,Green);//draws laser
   {
-    if (laser2.x==7)
+    if (laser2.x==7)//loops obstacle back if it reaches end
     {
       laser2.y=player.y;
       laser2.x=0;
     }
     else
-    if (laser2.x<7)
+    if (laser2.x<7)//laser goes up one space if not at end
     {
       laser2.x++;
     }
@@ -474,7 +472,7 @@ void map2()//there needs to be a delay before laser shoots out
 
 
 
-void walls()                     // run over and over again
+void walls()//boundaries for the character                     // run over and over again
 {
   for (int j=0; j < 8; j++)
   {
@@ -491,7 +489,7 @@ void walls()                     // run over and over again
 
 
 
-void character()
+void character()//code for character movement
 {
   CheckButtonsDown();
   if(Button_Left)
