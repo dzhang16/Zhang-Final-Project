@@ -36,6 +36,10 @@ void loop()
     DrawC();
   if (letter==3)//3 obstacle level
     DrawD();
+  if (letter==4)
+    DrawE();
+  if (letter==5)
+    DrawF();
    //need some way to track player movement?When player moves lasers are drawn
   //or you could have two variable one for x coordinate and one for y coordinate
   //then use those variable to always have twon lasers that follow player
@@ -52,7 +56,7 @@ void loop()
   */
 }
 
-void DrawB()
+void DrawB()//first level with 1 obstacle
 {
   if (counter==6)
   {
@@ -68,7 +72,7 @@ void DrawB()
   {
     if (player.y==laser.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -76,7 +80,7 @@ void DrawB()
   {
     if (player.y==laser2.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -84,7 +88,7 @@ void DrawB()
   {
     if (player.y==laser3.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -92,53 +96,25 @@ void DrawB()
   {
     if (player.y==laser4.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
-  if (DeathCounter==0)//these are to show the lives with the LEDS.  turns one LED off everytime you get hit
-  {
-    SetAuxLEDsBinary(B11111111);
-  }
-  if (DeathCounter==1)
-  {
-    SetAuxLEDsBinary(B11111110);
-  }
-  if (DeathCounter==2)
-  {
-    SetAuxLEDsBinary(B11111100);
-  }
-  if (DeathCounter==3)
-  {
-    SetAuxLEDsBinary(B11111000);
-  }
-  if (DeathCounter==4)
-  {
-    SetAuxLEDsBinary(B11110000);
-  }
-  if (DeathCounter==5)
-  {
-    SetAuxLEDsBinary(B11100000);
-  }
-  if (DeathCounter==6)
-  {
-    SetAuxLEDsBinary(B11000000);
-  }
-  if (DeathCounter==7)
-  {
-    SetAuxLEDsBinary(B10000000);
-  }
-  if (DeathCounter>7)
-  {
-    letter=1;
-  }
-  map1();
-  character();
+  Death();//controls LED's
+  map1();//Draw lasers
+  character();//player movement
 }
 
 
 
-void DrawD()
+
+
+
+
+
+
+
+void DrawD()//second level with 3 obstacles
 {
   if (counter==12)
   {
@@ -150,12 +126,12 @@ void DrawD()
   {
     counter++;
   }
-  walls();
+  walls();//boundaries
   if (player.x==laser.x)//checks if laser toouching player
   {
     if (player.y==laser.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -163,7 +139,7 @@ void DrawD()
   {
     if (player.y==laser2.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -171,58 +147,33 @@ void DrawD()
   {
     if (player.y==laser3.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
-  if (DeathCounter==0)//LED's for the lives.  turns one LED off everytime you get hit
-  {
-    SetAuxLEDsBinary(B11111111);
-  }
-  if (DeathCounter==1)
-  {
-    SetAuxLEDsBinary(B11111110);
-  }
-  if (DeathCounter==2)
-  {
-    SetAuxLEDsBinary(B11111100);
-  }
-  if (DeathCounter==3)
-  {
-    SetAuxLEDsBinary(B11111000);
-  }
-  if (DeathCounter==4)
-  {
-    SetAuxLEDsBinary(B11110000);
-  }
-  if (DeathCounter==5)
-  {
-    SetAuxLEDsBinary(B11100000);
-  }
-  if (DeathCounter==6)
-  {
-    SetAuxLEDsBinary(B11000000);
-  }
-  if (DeathCounter==7)
-  {
-    SetAuxLEDsBinary(B10000000);
-  }
-  if (DeathCounter>7)
-  {
-    letter=1;
-  }
-  map3();
-  character();
+  Death();//LED's for the lives.  turns one LED off everytime you get hit
+  map3();//draws lasers
+  character();//playermovement
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 void DrawC()
 {
-  if (counter==18)
+  if (counter==17)
   {
-    speed=180;//speeds it up after 18 turns
+    letter=4;//goes to win screen
     Serial.println("B");
   }
   else
@@ -230,12 +181,12 @@ void DrawC()
   {
     counter++;
   }
-  walls();
+  walls();//boundaries
   if (player.x==laser.x)//checks if lasers touching player
   {
     if (player.y==laser.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -243,7 +194,7 @@ void DrawC()
   {
     if (player.y==laser2.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -251,7 +202,7 @@ void DrawC()
   {
     if (player.y==laser3.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -259,7 +210,67 @@ void DrawC()
   {
     if (player.y==laser4.y)
     {
-      DeathCounter++;
+      DeathCounter+=1;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  Death();//turns one LED off everytime you get hit
+  map2();//draws lasers
+  character();//controls movement
+}
+
+
+
+
+
+
+
+void DrawF()//endless level, after you die you go back to the win screen and can choose to do it again or go back to the very beginning
+{
+  if (counter==3)
+  {
+    speed=210;
+    Serial.println("B");
+  }
+  if (counter==10)
+  {
+    speed=170;
+  }
+  else
+  if (laser2.x==7)
+  {
+    counter++;
+  }
+  walls();//boundaries
+  if (player.x==laser.x)//checks if lasers touching player
+  {
+    if (player.y==laser.y)
+    {
+      DeathCounter+=1;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  if (player.x==laser2.x)
+  {
+    if (player.y==laser2.y)
+    {
+      DeathCounter+=1;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  if (player.x==laser3.x)
+  {
+    if (player.y==laser3.y)
+    {
+      DeathCounter+=1;
+      Tone_Start(ToneC3, 150);
+    }
+  }
+  if (player.x==laser4.x)
+  {
+    if (player.y==laser4.y)
+    {
+      DeathCounter+=1;
       Tone_Start(ToneC3, 150);
     }
   }
@@ -297,16 +308,53 @@ void DrawC()
   }
   if (DeathCounter>7)
   {
-    letter=1;
+    letter=4;
   }
-  map2();
-  character();
+  map2();//draws lasers
+  character();//controls player movement
 }
 
 
 
 
 
+
+
+
+void DrawE()//win screen
+{
+  for (int j=0; j < 8; j++) 
+  {
+    DrawPx(j,0,Green);
+    DrawPx(j,1,Green);
+    DrawPx(j,2,Green);
+    DrawPx(j,3,Green);
+    DrawPx(j,4,Green);
+    DrawPx(j,5,Green);
+    DrawPx(j,6,Green);
+    DrawPx(j,7,Green);
+    DisplaySlate();
+  }
+  CheckButtonsPress();
+  if (Button_B)//goes back to the very beginning
+  {
+    letter=0;
+    DeathCounter=0;
+    player.x=3;
+    player.y=4;
+    speed=230;
+    counter=0;
+  }
+  if (Button_A)//continues to an endless type of gametype where you can't win, but can challenge yourself to dodging
+  {
+    letter=5;
+    DeathCounter=0;
+    player.x=3;
+    player.y=4;
+    speed=230;
+    counter=0;
+  }
+}
 
 
 void DrawA()//death screen
@@ -324,7 +372,7 @@ void DrawA()//death screen
     DisplaySlate();
   }
   CheckButtonsPress();
-  if (Button_B)
+  if (Button_B)//goes back to the very beginning
   {
     letter=0;
     DeathCounter=0;
@@ -334,6 +382,15 @@ void DrawA()//death screen
     counter=0;
   }
 }
+
+
+
+
+
+
+
+
+
 
 void map1()// first level with two obstacles
 {
@@ -538,3 +595,43 @@ void character()//code for character movement
   ClearSlate();
 }
 
+
+void Death()//these are to show the lives with the LEDS.  turns one LED off everytime you get hit
+{
+  if (DeathCounter==0)
+  {
+    SetAuxLEDsBinary(B11111111);
+  }
+  if (DeathCounter==1)
+  {
+    SetAuxLEDsBinary(B11111110);
+  }
+  if (DeathCounter==2)
+  {
+    SetAuxLEDsBinary(B11111100);
+  }
+  if (DeathCounter==3)
+  {
+    SetAuxLEDsBinary(B11111000);
+  }
+  if (DeathCounter==4)
+  {
+    SetAuxLEDsBinary(B11110000);
+  }
+  if (DeathCounter==5)
+  {
+    SetAuxLEDsBinary(B11100000);
+  }
+  if (DeathCounter==6)
+  {
+    SetAuxLEDsBinary(B11000000);
+  }
+  if (DeathCounter==7)
+  {
+    SetAuxLEDsBinary(B10000000);
+  }
+  if (DeathCounter>7)
+  {
+    letter=1;//goes to death screen when counter goes above 7 
+  }
+}
