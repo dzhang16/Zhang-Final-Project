@@ -6,7 +6,7 @@
 struct Point
 {
   int x;
-  int y;
+  int y; 
 };
 
 Point player={3,4};
